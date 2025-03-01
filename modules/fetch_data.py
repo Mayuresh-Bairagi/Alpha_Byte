@@ -6,12 +6,10 @@ from Bio import Entrez
 
 class PMCResearchFetcher:
     def __init__(self):
-        """Initialize the fetcher with a preset email for NCBI Entrez."""
-        self.email = "mayureshbairagi2@gmail.com"  # Default email
+        self.email = "mayureshbairagi2@gmail.com"  
         Entrez.email = self.email
 
     def fetch_and_parse(self, url):
-        """Fetch a URL and return its BeautifulSoup-parsed content."""
         try:
             headers = {
                 "User-Agent": (
@@ -29,7 +27,6 @@ class PMCResearchFetcher:
             return None
 
     def download_pdf_and_extract_text(self, pdf_url):
-        """Download a PDF file from pdf_url and extract its text using PyPDF2."""
         headers = {
             'User-Agent': (
                 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
