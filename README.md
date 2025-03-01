@@ -1,3 +1,3 @@
-# Alpha_Byte
+# ALPHA BYTE
 
-## THIS IS FRONTEND
+## This is FRONTEND
