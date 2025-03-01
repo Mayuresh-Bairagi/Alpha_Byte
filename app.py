@@ -34,7 +34,7 @@ def home():
 
 @app.post("/patient")
 def create_patient(patient: patient):
-    message = db.add_patient(patient)
+    message = db.add_patient(patient.dict())
     return message
 
 
@@ -56,7 +56,7 @@ def delete_patient(id: int):
 
 @app.put("/patient/{patient_id}")
 def update_patient(id: int, patient: patient):
-    message = db.update_patient(id, patient)
+    message = db.update_patient(id, patient.dict())
     return message
 
 @app.get("/search_patient/{name}")
@@ -66,27 +66,24 @@ def search_patient(name: str):
 
 @app.post("/patientRecord")
 def create_patientRecord(patientRecord: patientRecord):
-    message = db.add_patientRecord(patientRecord)
+    message = db.add_patient_record(patientRecord.dict())
     return message
 
-@app.get("/patientRecord/{patientRecord_id}")
+@app.get("/patientRecord/{patient_id}")
 def get_patientRecord(id: int):
-    patientRecord = db.get_patientRecord(id)
+    patientRecord = db.get_patient_records(id)
     return {"patientRecord": patientRecord}
 
-@app.get("/patientRecord_all")
-def get_patientRecords():
-    patientRecords = db.get_patientRecords()
-    return {"patientRecords": patientRecords}
+
 
 @app.delete("/patientRecord/{patientRecord_id}")
 def delete_patientRecord(id: int):
-    message = db.delete_patientRecord(id)
+    message = db.delete_patient_record(id)
     return message
 
 @app.put("/patientRecord/{patientRecord_id}")
 def update_patientRecord(id: int, patientRecord: patientRecord):
-    message = db.update_patientRecord(id, patientRecord)
+    message = db.modify_patient_record(id, patientRecord.dict())
     return message
 
 

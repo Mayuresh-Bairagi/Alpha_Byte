@@ -73,10 +73,10 @@ class database:
     
     def get_patient_records(self, id):
         try :
-            patient_records = self.supabase.table('patient_records').select().eq('patient_id', id).execute()
+            patient_records = self.supabase.table('patient_records').select().eq('id', id).execute()
             patient_records = patient_records.json()
             patient_records_data = json.loads(patient_records)
-            return patient_records_data['data']
+            return patient_records_data['data'][0]
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Error retrieving patient records: {str(e)}")
         
