@@ -16,7 +16,7 @@ class MedicalChatbot:
         """Fetch disease for a given patient ID from patient records."""
         patient_records = self.db.get_patient_records(patient_id)
         if patient_records and len(patient_records) > 0:
-            return patient_records[0].get('disease')
+            return patient_records.get('disease')
         return None
 
     def process_research_papers(self, disease):
