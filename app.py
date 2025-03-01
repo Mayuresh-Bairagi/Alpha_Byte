@@ -7,11 +7,12 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from modules.database import database
 from modules.model import patient, patientRecord
-
+from modules.chatbot import MedicalChatbot
 
 
 app = FastAPI(title="AI-Powered Clinical Decision Support System Using Retrieval-Augmented Generation (RAG)")
 db = database()
+chatbot = MedicalChatbot()
 
 origins = [
     "http://localhost",
@@ -86,7 +87,10 @@ def update_patientRecord(id: int, patientRecord: patientRecord):
     message = db.modify_patient_record(id, patientRecord.dict())
     return message
 
-
+@app.post("/chatbot")
+def chatbot_response(patient_id: int, query: str):
+    response = chatbot.get_response(patient_id, query)
+    return {"response": response}
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
