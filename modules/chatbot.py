@@ -3,14 +3,17 @@ import requests
 from modules.database import database
 from modules.fetch_data import PMCResearchFetcher
 from modules.faiss_index import FaissIndex
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
 class MedicalChatbot:
     def __init__(self):
         self.db = database()
         self.research_fetcher = PMCResearchFetcher()
         self.faiss_index = FaissIndex()
-        self.GROQ_API_KEY = "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"
-        self.GROQ_MODEL = "llama3-8b-8192"
+        self.GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+        self.GROQ_MODEL = os.getenv("GROQ_MODEL")
         
         # Cache for storing patient-related research papers
         self.cached_patient_data = {}
