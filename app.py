@@ -89,7 +89,7 @@ def update_patientRecord(id: int, patientRecord: patientRecord):
 
 @app.post("/chatbot")
 def chatbot_response(patient_id: int, query: str):
-    response = chatbot.get_response(patient_id, query)
+    response = chatbot.generate_response(patient_id, query)
     return {"response": response}
 
 if __name__ == "__main__":
