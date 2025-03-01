@@ -5,11 +5,19 @@ from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
+from modules.database import database
+from modules.model import patient, patientRecord
+
 
 
 app = FastAPI(title="AI-Powered Clinical Decision Support System Using Retrieval-Augmented Generation (RAG)")
+db = database()
 
-origins = []
+origins = [
+    "http://localhost",
+    "http://localhost:8000",
+    "http://localhost:5173",
+]
 
 app.add_middleware(
     CORSMiddleware,
@@ -22,6 +30,65 @@ app.add_middleware(
 @app.get("/")
 def home():
     return {"message": "Welcome to Clinical Decision Support System"}
+
+
+@app.post("/patient")
+def create_patient(patient: patient):
+    message = db.add_patient(patient)
+    return message
+
+
+@app.get("/patient/{patient_id}")
+def get_patient(id: int):
+    patient = db.get_patient(id)
+    return {"patient": patient}
+
+@app.get("/patient_all")
+def get_patients():
+    patients = db.get_patients()
+    return {"patients": patients}
+
+
+@app.delete("/patient/{patient_id}")
+def delete_patient(id: int):
+    message = db.delete_patient(id)
+    return message
+
+@app.put("/patient/{patient_id}")
+def update_patient(id: int, patient: patient):
+    message = db.update_patient(id, patient)
+    return message
+
+@app.get("/search_patient/{name}")
+def search_patient(name: str):
+    patients = db.search_patient(name)
+    return {"patients": patients}
+
+@app.post("/patientRecord")
+def create_patientRecord(patientRecord: patientRecord):
+    message = db.add_patientRecord(patientRecord)
+    return message
+
+@app.get("/patientRecord/{patientRecord_id}")
+def get_patientRecord(id: int):
+    patientRecord = db.get_patientRecord(id)
+    return {"patientRecord": patientRecord}
+
+@app.get("/patientRecord_all")
+def get_patientRecords():
+    patientRecords = db.get_patientRecords()
+    return {"patientRecords": patientRecords}
+
+@app.delete("/patientRecord/{patientRecord_id}")
+def delete_patientRecord(id: int):
+    message = db.delete_patientRecord(id)
+    return message
+
+@app.put("/patientRecord/{patientRecord_id}")
+def update_patientRecord(id: int, patientRecord: patientRecord):
+    message = db.update_patientRecord(id, patientRecord)
+    return message
+
 
 
 if __name__ == "__main__":

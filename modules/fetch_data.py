@@ -80,16 +80,14 @@ class PMCResearchFetcher:
             if not soup:
                 print(f"Skipping article PMC{pmc_id} due to fetch error.")
                 continue
-                
-            # Use the page title as the research paper name
+
             title_tag = soup.find('title')
             title_text = title_tag.get_text().strip() if title_tag else f"PMC{pmc_id}"
             
-            # Find the PDF link (looking for an <a> tag with a specific class)
+
             pdf_anchor = soup.find('a', class_='usa-button usa-button--outline width-24 display-inline-flex flex-align-center flex-justify-start padding-left-1')
             if pdf_anchor:
                 pdf_url = pdf_anchor.get('href')
-                # If the link is relative, construct the full URL
                 if not pdf_url.startswith('http'):
                     pdf_url = article_url + pdf_url
                 print(f"PDF link found: {pdf_url}")
